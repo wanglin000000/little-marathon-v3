@@ -985,22 +985,37 @@ function onCpPhoto(input) {
 }
 
 function confirmCp() {
-  const spots = ['起点','1号点','2号点','3号点','4号点','5号点','终点'];
-  G.cps[G.curCp] = true;
-  renderStars();
+  // 第一步：先关闭弹窗
+  document.getElementById('ov-checkpoint').classList.remove('show');
   
-  // 添加打卡成功的视觉反馈
-  const btn = document.getElementById('sb-' + G.curCp);
-  if (btn) {
-    btn.style.transform = 'scale(1.3)';
-    btn.style.transition = 'transform 0.3s ease';
-    setTimeout(() => { btn.style.transform = 'scale(1)'; }, 300);
+  // 第二步：更新数据
+  const spots = ['起点','1号点','2号点','3号点','4号点','5号点','终点'];
+  var idx = G.curCp;
+  G.cps[idx] = true;
+  
+  // 第三步：更新星星显示
+  var starBtn = document.getElementById('sb-' + idx);
+  if (starBtn) {
+    var svg = starBtn.querySelector('svg path');
+    if (svg) svg.setAttribute('fill', '#FFD700');
+    starBtn.style.transform = 'scale(1.2)';
+    setTimeout(function(){ starBtn.style.transform = 'scale(1)'; }, 300);
   }
   
-  closeOverlay('ov-checkpoint');
-  showToast(`🎉 ${spots[G.curCp]}打卡成功！`, 3000);
-  save();
-  checkWin();
+  // 第四步：保存
+  localStorage.setItem(KEY, JSON.stringify(G));
+  
+  // 第五步：提示
+  var toast = document.createElement('div');
+  toast.style.cssText = 'position:fixed;top:60px;left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:12px 24px;border-radius:8px;z-index:9999;font-size:16px;';
+  toast.innerHTML = '🎉 ' + spots[idx] + '打卡成功！';
+  document.body.appendChild(toast);
+  setTimeout(function(){ toast.remove(); }, 3000);
+  
+  // 第六步：检查是否完成
+  if (G.cps.filter(Boolean).length >= 7) {
+    showTrophy();
+  }
 }
 
 function checkWin() {
