@@ -557,14 +557,13 @@
 </div>
 
 <!-- ===== 打卡弹窗 ===== -->
-<div class="overlay" id="ov-checkpoint">
-  <div class="popup" style="padding:24px 20px 20px;">
-    <h3 id="cp-title" style="font-size:22px;">⭐ 第1站打卡</h3>
-    <div class="sub-txt" id="cp-hint" style="margin:12px 0 20px;font-size:15px;">✨ 点击下方按钮，一键打卡！</div>
-    <button class="btn btn-green" id="cp-confirm" onclick="alert('按钮被点击了！'); confirmCp()" style="font-size:18px;padding:16px 24px;min-height:56px;touch-action:manipulation;-webkit-tap-highlight-color:rgba(0,0,0,0);">
-      ✨ 确认打卡 ✨
-    </button>
-    <button class="btn btn-gray" style="margin-top:10px;font-size:16px;padding:12px 24px;min-height:48px;touch-action:manipulation;-webkit-tap-highlight-color:rgba(0,0,0,0);" onclick="closeOverlay('ov-checkpoint')">返回</button>
+<div class="overlay" id="ov-checkpoint" onclick="if(event.target==this)closeOverlay('ov-checkpoint')">
+  <div class="popup" style="padding:30px 24px;max-width:320px;">
+    <div style="font-size:48px;margin-bottom:16px;">🎯</div>
+    <h3 id="cp-title" style="font-size:24px;margin-bottom:8px;">打卡确认</h3>
+    <p id="cp-hint" style="color:#666;margin-bottom:24px;">确定要在此地点打卡吗？</p>
+    <a id="cp-confirm" href="javascript:void(0)" onclick="confirmCp();return false;" style="display:block;background:#00b09b;color:white;text-align:center;padding:18px;border-radius:12px;font-size:18px;font-weight:bold;text-decoration:none;margin-bottom:12px;">✅ 确认打卡</a>
+    <a href="javascript:void(0)" onclick="closeOverlay('ov-checkpoint');return false;" style="display:block;background:#eee;color:#666;text-align:center;padding:14px;border-radius:12px;font-size:16px;text-decoration:none;">取消</a>
   </div>
 </div>
 
