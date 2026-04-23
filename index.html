@@ -970,8 +970,6 @@ function openCpModal(i) {
   const spots = ['起点','1号点','2号点','3号点','4号点','5号点','终点'];
   document.getElementById('cp-title').textContent = `⭐ ${spots[i]}打卡`;
   document.getElementById('cp-hint').textContent = `点击下方按钮确认打卡（无需拍照）`;
-  document.getElementById('cp-preview').innerHTML = '<span style="font-size:40px;color:#FFD700;">⭐</span>';
-  document.getElementById('cp-confirm').disabled = false; // 无需拍照，直接可以打卡
   openOverlay('ov-checkpoint');
 }
 
