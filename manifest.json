@@ -1,0 +1,20 @@
+{
+  "name": "第一届小小马拉松",
+  "short_name": "小小马拉松",
+  "description": "北京幼师实验幼儿园定州园小小马拉松活动",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f7971e",
+  "theme_color": "#f7971e",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect fill='%23f7971e' width='512' height='512' rx='80'/><text x='50%' y='55%' dominant-baseline='middle' text-anchor='middle' font-size='280'>🏃</text></svg>",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education", "entertainment"],
+  "lang": "zh-CN"
+}

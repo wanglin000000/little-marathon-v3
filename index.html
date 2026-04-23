@@ -1,0 +1,1612 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#f7971e">
+  <meta name="description" content="北京幼师实验幼儿园定州园第一届小小马拉松活动">
+  <title>第一届小小马拉松</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect fill='%23f7971e' width='180' height='180' rx='30'/><text x='50%' y='58%' dominant-baseline='middle' text-anchor='middle' font-size='100'>🏃</text></svg>">
+  <style>
+    /* 安装提示条 */
+    .install-banner {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      padding: 12px 16px;
+      font-size: 14px;
+      z-index: 9999;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .install-banner.show { display: flex; }
+    .install-banner button {
+      background: white; color: #667eea; border: none;
+      padding: 6px 12px; border-radius: 20px; font-size: 13px; cursor: pointer;
+    }
+    /* 后台运行状态条 - 类似iOS通知横幅 */
+    .status-bar {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      background: linear-gradient(135deg, #00b09b, #96c93d);
+      color: white;
+      padding: 10px 16px;
+      font-size: 13px;
+      z-index: 9998;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 600;
+    }
+    .status-bar.show { display: flex; }
+    .status-bar:active { opacity: 0.8; }
+  </style>
+  <title>第一届小小马拉松</title>
+  <style>
+    :root {
+      --green: #00b09b;
+      --green2: #96c93d;
+      --orange: #f7971e;
+      --yellow: #ffd200;
+      --pink: #f64f59;
+      --purple: #8e44ad;
+      --blue: #2980b9;
+      --sky: #74b9ff;
+      --bg-grad: linear-gradient(160deg, #0093E9 0%, #80D0C7 100%);
+      --card: rgba(255,255,255,0.97);
+      --text: #2d3436;
+      --muted: #636e72;
+      --radius: 20px;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+    html, body { height:100%; overflow-x:hidden; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", sans-serif; background: var(--bg-grad); min-height:100vh; }
+    
+    .page { display:none; min-height:100vh; animation: fadeSlide 0.3s ease; }
+    .page.active { display:block; }
+    @keyframes fadeSlide { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:none; } }
+
+    /* ======== 登录页 ======== */
+    .login-top {
+      background: linear-gradient(135deg, #f7971e, #ffd200);
+      padding: 28px 20px 60px;
+      text-align: center;
+      border-radius: 0 0 40px 40px;
+      position: relative;
+    }
+    .login-top::before {
+      content: '🌿🌱🌸';
+      position: absolute;
+      left: 10px; bottom: 10px;
+      font-size: 22px;
+    }
+    .login-top::after {
+      content: '🌸🌱🌿';
+      position: absolute;
+      right: 10px; bottom: 10px;
+      font-size: 22px;
+    }
+    .login-top h1 {
+      font-size: 20px;
+      font-weight: 800;
+      color: white;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      line-height: 1.5;
+    }
+    .login-top .sub { font-size: 14px; color: rgba(255,255,255,0.85); margin-top: 6px; }
+    .login-card {
+      background: var(--card);
+      margin: -40px 14px 20px;
+      border-radius: 26px;
+      padding: 28px 18px 18px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+    }
+    .section-label {
+      font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 14px;
+      display: flex; align-items: center; gap: 6px;
+    }
+
+    /* 头像区 */
+    .avatar-row { display:flex; flex-direction:column; align-items:center; margin-bottom:20px; }
+    .avatar-circle {
+      width: 90px; height: 90px; border-radius: 50%;
+      border: 3px dashed var(--orange);
+      background: #fff8f0;
+      display: flex; align-items:center; justify-content:center;
+      overflow: hidden; cursor: pointer; position:relative;
+    }
+    .avatar-circle img { width:100%; height:100%; object-fit:cover; }
+    .avatar-circle .icon-txt { font-size: 32px; }
+    .avatar-hint-txt { font-size: 12px; color: var(--muted); margin-top: 8px; }
+
+    /* 表单 */
+    .field { margin-bottom: 14px; }
+    .field label { display:block; font-size:13px; color:var(--muted); margin-bottom:6px; font-weight:600; }
+    .field select, .field input {
+      width:100%; padding:13px 14px; border:2px solid #EEE; border-radius:13px;
+      font-size:16px; background:#FAFAFA; transition:border-color 0.2s;
+    }
+    .field select:focus, .field input:focus { outline:none; border-color:var(--orange); background:#fff; }
+    .field.two-col { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+
+    /* 按钮 */
+    .btn { width:100%; padding:15px; border:none; border-radius:15px; font-size:17px; font-weight:700; cursor:pointer; transition:all 0.2s; display:block; }
+    .btn:active { transform:scale(0.98); }
+    .btn-start {
+      background: linear-gradient(135deg, #f7971e, #ffd200);
+      color: #fff; box-shadow: 0 6px 18px rgba(247,151,30,0.45); margin-top: 6px;
+    }
+    .btn-start:disabled { opacity:0.45; cursor:not-allowed; transform:none; }
+    .btn-green {
+      background: linear-gradient(135deg, #00b09b, #96c93d);
+      color: white; box-shadow: 0 6px 18px rgba(0,176,155,0.4);
+    }
+    .btn-red {
+      background: linear-gradient(135deg, #f64f59, #c0392b);
+      color: white; box-shadow: 0 6px 18px rgba(246,79,89,0.4);
+    }
+    .btn-gray { background:#F0F0F0; color: var(--text); }
+    .btn-share {
+      background: linear-gradient(135deg, #07C160, #06AD56);
+      color:white; box-shadow:0 6px 18px rgba(7,193,96,0.4);
+      display:flex; align-items:center; justify-content:center; gap:10px;
+    }
+
+    /* ======== 运动页 ======== */
+    .run-page { background: linear-gradient(160deg, #43cea2 0%, #185a9d 100%); min-height:100vh; padding-bottom:30px; }
+    .run-banner {
+      background: linear-gradient(135deg, #43cea2, #185a9d);
+      padding: 18px 16px;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .run-banner-avatar {
+      width: 56px; height: 56px; border-radius: 50%;
+      border: 3px solid rgba(255,255,255,0.8);
+      overflow: hidden; flex-shrink: 0;
+    }
+    .run-banner-avatar img { width:100%; height:100%; object-fit:cover; }
+    .run-banner-info { flex:1; text-align:left; }
+    .run-banner-name { font-size:17px; font-weight:800; color:white; }
+    .run-banner-sub { font-size:12px; color:rgba(255,255,255,0.8); margin-top:2px; }
+    .run-card {
+      background: var(--card);
+      margin: 12px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+    }
+    /* 计时器 */
+    .timer-section {
+      padding: 20px 20px 14px;
+      text-align:center;
+      border-bottom: 1px dashed #E8E8E8;
+    }
+    .timer-label { font-size:13px; color:var(--muted); margin-bottom:6px; }
+    .timer-display {
+      font-size: 56px; font-weight: 800;
+      font-variant-numeric: tabular-nums;
+      color: #00b09b; letter-spacing: 2px;
+      transition: color 0.5s;
+    }
+    .timer-display.warn { color: #f7971e; }
+    .timer-display.danger { color: #f64f59; animation: blink 1s infinite; }
+    @keyframes blink { 50% { opacity: 0.4; } }
+    
+    /* 步数区 */
+    .steps-section { padding: 16px 20px 10px; }
+    .steps-row { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
+    .steps-num { font-size: 44px; font-weight: 800; color: #00b09b; }
+    .steps-target { font-size: 13px; color: var(--muted); text-align:right; }
+    .progress-bar { height:12px; background:#E8E8E8; border-radius:6px; overflow:hidden; }
+    .progress-fill { height:100%; border-radius:6px; transition:width 0.4s; background:linear-gradient(90deg, #00b09b, #96c93d); }
+    .milestone-labels { display:flex; justify-content:space-between; font-size:10px; color:#bbb; margin-top:4px; padding:0 2px; }
+    
+    /* 鼓励文字 */
+    .cheer-box {
+      margin: 12px 12px 0;
+      background: linear-gradient(135deg, #fff8dc, #fffde7);
+      border-radius: 14px;
+      padding: 12px 16px;
+      min-height: 50px;
+      text-align: center;
+      display: flex; align-items:center; justify-content:center;
+    }
+    .cheer-inner {
+      font-size: 17px; font-weight: 700; color: #e67e22;
+      animation: cheerPop 0.4s ease;
+    }
+    @keyframes cheerPop { from { transform:scale(0.85); opacity:0.5; } to { transform:scale(1); opacity:1; } }
+    
+    /* 打卡星星 */
+    .checkpoint-section {
+      background: var(--card);
+      margin: 10px 12px;
+      border-radius: var(--radius);
+      padding: 16px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    }
+    .checkpoint-header {
+      font-size: 15px; font-weight: 700; color: var(--text);
+      display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;
+    }
+    .checkpoint-count { font-size:13px; color:var(--orange); font-weight:700; }
+    .stars-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:6px; }
+    .star-btn {
+      display:flex; flex-direction:column; align-items:center; cursor:pointer; padding:4px 2px; border-radius:8px;
+      transition:transform 0.2s;
+    }
+    .star-btn:active { transform:scale(0.9); }
+    .star-svg { width:34px; height:34px; margin-bottom:3px; }
+    .star-svg.off { filter:grayscale(1) opacity(0.35); }
+    .star-svg.on { animation: starGlow 2s ease infinite; }
+    @keyframes starGlow { 0%,100% { filter:drop-shadow(0 0 4px #FFD700); } 50% { filter:drop-shadow(0 0 12px #FFD700); } }
+    .star-label { font-size: 9px; color: var(--muted); text-align:center; }
+    .star-label.done { color: #00b09b; font-weight:600; }
+    
+    /* 控制按钮 */
+    .ctrl-row { display:flex; gap:10px; padding: 10px 12px 0; }
+    .ctrl-btn { flex:1; padding:14px 8px; border:none; border-radius:14px; font-size:16px; font-weight:700; cursor:pointer; transition:all 0.2s; }
+    .ctrl-btn:active { transform:scale(0.97); }
+    .ctrl-start { background:linear-gradient(135deg,#00b09b,#96c93d); color:white; box-shadow:0 5px 16px rgba(0,176,155,0.4); }
+    .ctrl-stop { background:linear-gradient(135deg,#f64f59,#c0392b); color:white; box-shadow:0 5px 16px rgba(246,79,89,0.4); }
+    .ctrl-exit { background:#F0F0F0; color:#555; max-width:90px; }
+    
+    /* ======== 完成页 ======== */
+    .complete-bg { background:linear-gradient(160deg, #f7971e, #ffd200); min-height:100vh; padding-bottom:30px; }
+    .trophy-area { padding:40px 20px 20px; text-align:center; }
+    .trophy-emoji { font-size:90px; display:block; animation:float 3s ease infinite; }
+    @keyframes float { 0%,100% { transform:translateY(0) rotate(-3deg); } 50% { transform:translateY(-12px) rotate(3deg); } }
+    .trophy-title { font-size:28px; font-weight:800; color:white; margin-top:10px; text-shadow:0 2px 8px rgba(0,0,0,0.15); }
+    .trophy-name-badge {
+      display:inline-block;
+      background:rgba(255,255,255,0.95);
+      border-radius:50px;
+      padding:12px 30px;
+      margin-top:15px;
+      box-shadow:0 4px 20px rgba(0,0,0,0.2);
+    }
+    .trophy-name-badge .name { font-size:24px; font-weight:800; color:#f7971e; }
+    .trophy-name-badge .grade { font-size:14px; color:#888; margin-top:2px; }
+    .complete-card {
+      background:var(--card); margin: -20px 14px 14px; border-radius:26px;
+      padding:24px 18px; box-shadow:0 12px 40px rgba(0,0,0,0.15);
+    }
+    .stat-row { display:flex; justify-content:space-between; align-items:center; padding:14px 0; border-bottom:1px solid #F5F5F5; }
+    .stat-row:last-child { border:none; }
+    .stat-lbl { font-size:15px; color:var(--muted); }
+    .stat-val { font-size:17px; font-weight:700; color:var(--text); }
+    .star-result { display:flex; gap:3px; }
+    .star-result span { font-size:20px; }
+    
+    /* ======== 弹窗 ======== */
+    .overlay { position:fixed; inset:0; background:rgba(0,0,0,0.65); display:none; align-items:center; justify-content:center; z-index:1000; padding:16px; }
+    .overlay.show { display:flex; }
+    .popup { background:white; border-radius:24px; padding:28px 18px 18px; width:100%; max-width:360px; text-align:center; }
+    .popup h3 { font-size:20px; font-weight:800; margin-bottom:4px; }
+    .popup .sub-txt { font-size:13px; color:var(--muted); margin-bottom:14px; }
+    .photo-preview {
+      width:180px; height:180px; border-radius:16px; border:2px dashed #DDD;
+      background:#F8F8F8; margin:0 auto 16px; display:flex; align-items:center; justify-content:center;
+      overflow:hidden; cursor:pointer;
+    }
+    .photo-preview img { width:100%; height:100%; object-fit:cover; }
+    .photo-btn-wrap { display:flex; gap:10px; margin-bottom:12px; }
+    .photo-action {
+      flex:1; padding:12px; border:2px solid #E0E0E0; border-radius:12px;
+      background:white; font-size:15px; cursor:pointer; font-weight:600;
+      display:flex; flex-direction:column; align-items:center; gap:4px;
+    }
+    .photo-action.active { border-color:var(--blue); background:#EBF5FF; }
+    
+    /* Toast */
+    .toast-msg {
+      position:fixed; top:50%; left:50%; transform:translate(-50%,-50%);
+      background:rgba(0,0,0,0.8); color:white; padding:14px 26px;
+      border-radius:10px; font-size:16px; z-index:3000;
+      animation:fadeIn 0.2s; pointer-events:none;
+    }
+    @keyframes fadeIn { from { opacity:0; transform:translate(-50%,-55%); } to { opacity:1; transform:translate(-50%,-50%); } }
+    
+    /* 烟花彩带 */
+    .confetti-wrap { position:fixed; inset:0; pointer-events:none; z-index:500; }
+    .confetti-piece { position:absolute; width:10px; height:10px; opacity:0; }
+    @keyframes confettiFall {
+      0% { transform:translateY(-100px) rotate(0deg); opacity:1; }
+      100% { transform:translateY(100vh) rotate(720deg); opacity:0; }
+    }
+    
+    /* 奖杯弹窗 */
+    .trophy-popup .trophy-big { font-size:80px; animation:float 3s ease infinite; display:block; }
+    .trophy-popup .winner-name { font-size:24px; font-weight:800; color:#E67E22; margin:10px 0 5px; }
+    .trophy-popup .winner-meta { font-size:14px; color:var(--muted); }
+    .trophy-cert {
+      background:linear-gradient(135deg,#fff8dc,#fff3e0);
+      border:2px solid #FFD200; border-radius:16px;
+      padding:16px; margin:14px 0;
+    }
+    .trophy-cert .title { font-size:15px; font-weight:700; color:#c0392b; margin-bottom:8px; }
+    .trophy-cert .content { font-size:13px; color:#555; line-height:1.8; }
+
+    /* ======== 管理员页 ======== */
+    .admin-top {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      padding: 24px 20px 50px;
+      text-align: center;
+      border-radius: 0 0 40px 40px;
+    }
+    .admin-top h1 { font-size:22px; font-weight:800; color:white; }
+    .admin-card {
+      background: var(--card);
+      margin: -30px 14px 20px;
+      border-radius: 24px;
+      padding: 24px 18px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+    }
+    .admin-login .field { margin-bottom:14px; }
+    .admin-login .field label { display:block; font-size:13px; color:var(--muted); margin-bottom:6px; font-weight:600; }
+    .admin-login .field input {
+      width:100%; padding:14px; border:2px solid #EEE; border-radius:12px;
+      font-size:16px; background:#FAFAFA;
+    }
+    .admin-login .field input:focus { outline:none; border-color:#667eea; }
+
+    /* 管理员仪表盘 */
+    .admin-dash { padding:14px; }
+    .admin-stat-row { display:flex; gap:10px; margin-bottom:16px; }
+    .admin-stat-box {
+      flex:1; background:white; border-radius:16px; padding:16px; text-align:center;
+      box-shadow:0 4px 16px rgba(0,0,0,0.08);
+    }
+    .admin-stat-box .num { font-size:32px; font-weight:800; color:#667eea; }
+    .admin-stat-box .lbl { font-size:12px; color:var(--muted); margin-top:4px; }
+
+    /* 排名列表 */
+    .rank-list { background:white; border-radius:16px; overflow:hidden; box-shadow:0 4px 16px rgba(0,0,0,0.08); }
+    .rank-item {
+      display:flex; align-items:center; padding:14px 16px; border-bottom:1px solid #F0F0F0;
+    }
+    .rank-item:last-child { border:none; }
+    .rank-num { font-size:18px; font-weight:800; width:36px; color:var(--muted); }
+    .rank-num.top1 { color:#FFD700; }
+    .rank-num.top2 { color:#C0C0C0; }
+    .rank-num.top3 { color:#CD7F32; }
+    .rank-avatar { width:40px; height:40px; border-radius:50%; margin-right:12px; object-fit:cover; }
+    .rank-info { flex:1; }
+    .rank-name { font-size:15px; font-weight:700; }
+    .rank-meta { font-size:12px; color:var(--muted); }
+    .rank-stars { font-size:16px; }
+    .rank-stars .done { color:#FFD700; }
+    .rank-stars .todo { color:#DDD; }
+
+    /* 导出按钮 */
+    .export-btn {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white; border: none; border-radius:12px;
+      padding:12px 20px; font-size:15px; font-weight:700; cursor:pointer;
+      display:inline-flex; align-items:center; gap:8px;
+    }
+
+    /* 奖杯画布（隐藏） */
+    #trophy-canvas { display:none; }
+
+    /* 分享图片预览 */
+    .share-preview {
+      position:fixed; top:50%; left:50%; transform:translate(-50%,-50%);
+      background:white; border-radius:20px; padding:20px;
+      max-width:90vw; max-height:90vh; z-index:2000;
+      box-shadow:0 10px 50px rgba(0,0,0,0.3);
+    }
+    .share-preview img { max-width:100%; max-height:70vh; border-radius:12px; }
+    .share-preview-btns { display:flex; gap:10px; margin-top:12px; }
+    .share-preview-btns button { flex:1; }
+  </style>
+</head>
+<body>
+
+<!-- ===== 注册页 ===== -->
+<div class="page active" id="page-reg">
+  <div class="login-top">
+    <div style="text-align:right;padding:0 0 10px;">
+      <a href="#" onclick="showPage('page-admin');return false;" style="color:rgba(255,255,255,0.7);font-size:12px;">管理员入口</a>
+    </div>
+    <h1>🏃‍♀️ 第一届小小马拉松 🏃‍♂️</h1>
+    <div class="sub">北京幼师实验幼儿园定州园</div>
+  </div>
+  
+  <div class="login-card">
+    <div class="avatar-row">
+      <div class="avatar-circle" id="avatar-circle" onclick="choosePhoto()">
+        <span class="icon-txt" id="avatar-icon">📷</span>
+        <img id="avatar-img" style="display:none">
+      </div>
+      <div class="avatar-hint-txt">点击添加头像（拍照或相册）</div>
+      <input type="file" id="avatar-file" accept="image/*" style="display:none">
+    </div>
+    
+    <div class="field two-col">
+      <div>
+        <label>年级</label>
+        <select id="sel-grade" onchange="onGradeChange()">
+          <option value="">请选择</option>
+          <option>小班</option>
+          <option>中班</option>
+          <option>大班</option>
+        </select>
+      </div>
+      <div>
+        <label>班级</label>
+        <select id="sel-class" disabled>
+          <option value="">先选年级</option>
+        </select>
+      </div>
+    </div>
+    
+    <div class="field">
+      <label>小朋友姓名</label>
+      <input type="text" id="inp-name" placeholder="请输入姓名" maxlength="10" oninput="checkForm()">
+    </div>
+    
+    <button class="btn btn-start" id="btn-enter" disabled onclick="enterRun()">出发！开始马拉松 🏁</button>
+  </div>
+</div>
+
+<!-- ===== 运动页 ===== -->
+<div class="page" id="page-run">
+  <div class="run-page">
+    <div class="run-banner">
+      <div class="run-banner-avatar">
+        <img id="run-av" src="">
+      </div>
+      <div class="run-banner-info">
+        <div class="run-banner-name" id="run-name">小朋友</div>
+        <div class="run-banner-sub" id="run-class">— · —</div>
+      </div>
+      <div style="font-size:13px;color:rgba(255,255,255,0.8);font-weight:600;">小马拉松</div>
+    </div>
+    
+    <div class="run-card">
+      <div class="timer-section">
+        <div class="timer-label">⏱ 剩余时间</div>
+        <div class="timer-display" id="timer">59:59</div>
+      </div>
+      <div class="steps-section">
+        <div class="steps-row">
+          <div>
+            <div style="font-size:12px;color:var(--muted);margin-bottom:3px;">👣 当前步数</div>
+            <div class="steps-num" id="step-num">0</div>
+          </div>
+          <div class="steps-target">
+            <div style="font-size:24px;font-weight:700;color:#bbb">/ 3000</div>
+            <div>目标步数</div>
+          </div>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="prog-fill" style="width:0%"></div>
+        </div>
+        <div class="milestone-labels">
+          <span>0</span><span>500</span><span>1000</span><span>1500</span><span>2000</span><span>2500</span><span>3000</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="cheer-box">
+      <div class="cheer-inner" id="cheer-txt">加油！准备好了就点击"开始跑步"！💪</div>
+    </div>
+    
+    <div class="checkpoint-section">
+      <div class="checkpoint-header">
+        <span>🏁 景点打卡</span>
+        <span class="checkpoint-count" id="cp-count">0 / 7</span>
+      </div>
+      <div style="font-size:12px;color:#888;text-align:center;margin-bottom:10px;">点击下方星星即可打卡拍照</div>
+      <div class="stars-grid" id="stars-grid"></div>
+    </div>
+    
+    <div class="ctrl-row">
+      <button class="ctrl-btn ctrl-start" id="ctrl-main" onclick="onToggleRun()">🏁 开始跑步</button>
+      <button class="ctrl-btn ctrl-exit" onclick="onExit()">退出</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 完成页 ===== -->
+<div class="page" id="page-done">
+  <div class="complete-bg">
+    <div class="trophy-area">
+      <span class="trophy-emoji">🏆</span>
+      <div class="trophy-title">太棒了！完成啦！</div>
+      <div class="trophy-name-badge">
+        <div class="name" id="done-name"></div>
+        <div class="grade" id="done-grade"></div>
+      </div>
+    </div>
+    <div class="complete-card">
+      <div class="stat-row">
+        <span class="stat-lbl">🏃 完成步数</span>
+        <span class="stat-val" id="done-steps">0 步</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-lbl">⭐ 打卡完成</span>
+        <div class="stat-val">
+          <div class="star-result" id="done-stars"></div>
+        </div>
+      </div>
+      <div class="stat-row">
+        <span class="stat-lbl">⏱ 用时</span>
+        <span class="stat-val" id="done-time">--:--</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-lbl">👤 班级</span>
+        <span class="stat-val" id="done-class">--</span>
+      </div>
+    </div>
+    <div style="padding:0 14px;">
+      <button class="btn btn-share" onclick="doShare()">📱&nbsp;&nbsp;分享到朋友圈</button>
+      <button class="btn btn-gray" style="margin-top:10px;" onclick="doRestart()">🔄 重新挑战</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 打卡弹窗 ===== -->
+<div class="overlay" id="ov-checkpoint">
+  <div class="popup">
+    <h3 id="cp-title">📸 第1站打卡</h3>
+    <div class="sub-txt" id="cp-hint">完成第1站，拍照留念！</div>
+    <div class="photo-preview" id="cp-preview" onclick="document.getElementById('cp-file').click()">
+      <span style="font-size:40px;color:#DDD;">📷</span>
+    </div>
+    <div class="photo-btn-wrap">
+      <label class="photo-action" for="cp-camera" id="btn-cam">
+        <span style="font-size:22px;">📸</span>
+        <span>拍照</span>
+        <input type="file" id="cp-camera" accept="image/*" capture="environment" style="display:none" onchange="onCpPhoto(this)">
+      </label>
+      <label class="photo-action" for="cp-gallery" id="btn-gal">
+        <span style="font-size:22px;">🖼️</span>
+        <span>相册</span>
+        <input type="file" id="cp-gallery" accept="image/*" style="display:none" onchange="onCpPhoto(this)">
+      </label>
+    </div>
+    <button class="btn btn-green" id="cp-confirm" onclick="confirmCp()">⭐ 确认打卡</button>
+    <button class="btn btn-gray" style="margin-top:8px;" onclick="closeOverlay('ov-checkpoint')">返回</button>
+  </div>
+</div>
+
+<!-- ===== 奖杯弹窗 ===== -->
+<div class="overlay" id="ov-trophy">
+  <div class="popup trophy-popup">
+    <span class="trophy-big">🏆</span>
+    <div class="winner-name" id="tr-name" style="font-size:28px;"></div>
+    <div class="winner-meta" id="tr-meta" style="margin-bottom:10px;"></div>
+    <div class="trophy-cert">
+      <div class="title">🏅 荣誉证书</div>
+      <div class="content" id="tr-cert"></div>
+    </div>
+    <button class="btn btn-share" onclick="doShare()">📱 分享到朋友圈</button>
+    <button class="btn btn-gray" style="margin-top:8px;" onclick="closeOverlay('ov-trophy')">关闭</button>
+  </div>
+</div>
+
+<!-- 安装提示条 -->
+<div class="install-banner" id="install-banner">
+  <span>添加到主屏幕，随时使用</span>
+  <button onclick="installApp()">安装</button>
+</div>
+
+<!-- 后台运行状态条 -->
+<div class="status-bar" id="status-bar">
+  <span>🏃 跑步中</span>
+</div>
+
+<!-- 彩带容器 -->
+<div class="confetti-wrap" id="confetti-wrap"></div>
+
+<!-- ===== 管理员登录页 ===== -->
+<div class="page" id="page-admin">
+  <div class="admin-top">
+    <h1>🏆 管理员后台</h1>
+  </div>
+  <div class="admin-card admin-login">
+    <div class="field">
+      <label>管理员密码</label>
+      <input type="password" id="admin-pwd" placeholder="请输入管理员密码" onkeypress="if(event.key==='Enter')adminLogin()">
+    </div>
+    <button class="btn btn-start" onclick="adminLogin()">进入后台</button>
+    <div style="text-align:center;margin-top:16px;">
+      <a href="#" onclick="showPage('page-reg');return false;" style="color:#667eea;font-size:13px;">返回参赛入口</a>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 管理员仪表盘 ===== -->
+<div class="page" id="page-admin-dash">
+  <div class="admin-top">
+    <h1>🏆 管理员后台</h1>
+    <div style="color:rgba(255,255,255,0.8);font-size:13px;margin-top:6px;">北京幼师实验幼儿园定州园</div>
+    <button class="btn btn-gray" style="margin-top:16px;" onclick="adminLogout()">退出登录</button>
+  </div>
+  <div class="admin-dash">
+    <div class="admin-stat-row">
+      <div class="admin-stat-box">
+        <div class="num" id="stat-total">0</div>
+        <div class="lbl">总参与人数</div>
+      </div>
+      <div class="admin-stat-box">
+        <div class="num" id="stat-finished">0</div>
+        <div class="lbl">完成打卡人数</div>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+      <span style="font-size:16px;font-weight:700;color:var(--text);">🏅 实时排名</span>
+      <button class="export-btn" onclick="exportRanking()">📥 导出排名</button>
+    </div>
+    <div class="rank-list" id="rank-list">
+      <div style="padding:40px;text-align:center;color:#aaa;">暂无数据</div>
+    </div>
+  </div>
+</div>
+
+<!-- 分享图片预览弹窗 -->
+<div class="overlay" id="ov-share-preview">
+  <div class="share-preview">
+    <img id="share-preview-img" src="">
+    <div class="share-preview-btns">
+      <button class="btn btn-green" onclick="saveShareImage()">💾 保存图片</button>
+      <button class="btn btn-share" onclick="shareImageDirect()">📱 分享</button>
+    </div>
+    <button class="btn btn-gray" style="margin-top:8px;" onclick="closeOverlay('ov-share-preview')">关闭</button>
+  </div>
+</div>
+
+<!-- 奖杯画布 -->
+<canvas id="trophy-canvas" width="1080" height="1920"></canvas>
+
+<script>
+// ===================== 数据层 =====================
+const KEY = 'marathon_v3';
+const STEP_TARGET = 3000;
+const TIME_TOTAL = 60 * 60 - 1; // 59:59
+const CP_STEPS = [300, 600, 900, 1200, 1500, 1800, 2100]; // 7个打卡点阈值（降低门槛）
+const CHEERS = [
+  '加油！你是最棒的小运动员！💪',
+  '🌟 500步啦！超厉害！继续加油！',
+  '🎉 1000步！你真的很棒哦！',
+  '💪 1500步！坚持下去，你是英雄！',
+  '⭐ 2000步！越来越厉害了！',
+  '🔥 2500步！胜利就在眼前！',
+  '🏆 3000步！你完成目标啦！太厉害！'
+];
+
+let G = {
+  name:'', grade:'', classroom:'', avatar:'',
+  steps:0, started:false, startTs:null, paused:false, pausedAt:null, pauseAcc:0,
+  cps:[false,false,false,false,false,false,false],
+  photos:[null,null,null,null,null,null,null],
+  curCp:-1, lastCheer:-1
+};
+
+let _timer = null, _stepH = null;
+let _lastMag = 0, _lastStepTime = 0, _filteredAcc = 0;
+
+// ===================== 初始化 =====================
+window.onload = () => {
+  const saved = localStorage.getItem(KEY);
+  if (saved) {
+    try {
+      const d = JSON.parse(saved);
+      if (d.started && d.name) {
+        G = d;
+        buildStars();
+        showPage('page-run');
+        renderRun();
+        if (!G.paused && G.started) {
+          startClock();
+          requestMotion();
+        }
+        document.getElementById('ctrl-main').textContent = G.paused ? '▶️ 继续跑步' : '⏸ 暂停';
+        document.getElementById('ctrl-main').className = G.paused ? 'ctrl-btn ctrl-start' : 'ctrl-btn ctrl-stop';
+        return;
+      }
+    } catch(e){}
+  }
+  buildStars();
+  bindAvatarInput();
+};
+
+function bindAvatarInput() {
+  document.getElementById('avatar-file').onchange = e => {
+    const f = e.target.files[0];
+    if (!f) return;
+    const r = new FileReader();
+    r.onload = ev => {
+      document.getElementById('avatar-img').src = ev.target.result;
+      document.getElementById('avatar-img').style.display = 'block';
+      document.getElementById('avatar-icon').style.display = 'none';
+      G.avatar = ev.target.result;
+      checkForm();
+    };
+    r.readAsDataURL(f);
+  };
+  
+  document.getElementById('sel-class').onchange = () => checkForm();
+}
+
+function choosePhoto() {
+  document.getElementById('avatar-file').removeAttribute('capture');
+  document.getElementById('avatar-file').click();
+}
+
+function onGradeChange() {
+  const g = document.getElementById('sel-grade').value;
+  const cs = document.getElementById('sel-class');
+  const map = {
+    '小班': ['小一班','小二班','小三班'],
+    '中班': ['中一班','中二班','中三班'],
+    '大班': ['大一班','大二班','大三班']
+  };
+  if (g && map[g]) {
+    cs.disabled = false;
+    cs.innerHTML = '<option value="">请选择班级</option>' + map[g].map(c=>`<option>${c}</option>`).join('');
+  } else {
+    cs.disabled = true;
+    cs.innerHTML = '<option value="">先选年级</option>';
+  }
+  checkForm();
+}
+
+function checkForm() {
+  const ok = G.avatar && document.getElementById('sel-grade').value && document.getElementById('sel-class').value && document.getElementById('inp-name').value.trim();
+  document.getElementById('btn-enter').disabled = !ok;
+}
+
+function enterRun() {
+  G.name = document.getElementById('inp-name').value.trim();
+  G.grade = document.getElementById('sel-grade').value;
+  G.classroom = document.getElementById('sel-class').value;
+  G.steps = 0; G.started = false; G.startTs = null; G.paused = false; G.pauseAcc = 0;
+  G.cps = [false,false,false,false,false,false,false];
+  G.photos = [null,null,null,null,null,null,null];
+  G.curCp = -1; G.lastCheer = -1;
+  
+  showPage('page-run');
+  renderRun();
+  save();
+}
+
+// ===================== 运动页 =====================
+function renderRun() {
+  document.getElementById('run-av').src = G.avatar;
+  document.getElementById('run-name').textContent = G.name + '小朋友';
+  document.getElementById('run-class').textContent = G.grade + ' · ' + G.classroom;
+  updateStepUI();
+  renderStars();
+}
+
+function buildStars() {
+  const grid = document.getElementById('stars-grid');
+  grid.innerHTML = '';
+  const spots = ['起点','1号点','2号点','3号点','4号点','5号点','终点'];
+  for (let i = 0; i < 7; i++) {
+    const btn = document.createElement('div');
+    btn.className = 'star-btn';
+    btn.id = 'sb-' + i;
+    btn.onclick = () => onStarClick(i);
+    btn.innerHTML = `
+      <svg class="star-svg ${G.cps[i]?'on':'off'}" viewBox="0 0 24 24">
+        <path fill="#FFD700" stroke="#FFA000" stroke-width="0.5"
+          d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+      </svg>
+      <div class="star-label ${G.cps[i]?'done':''}" id="sl-${i}">${spots[i]}</div>
+    `;
+    grid.appendChild(btn);
+  }
+}
+
+function renderStars() {
+  const spots = ['起点','1号点','2号点','3号点','4号点','5号点','终点'];
+  for (let i = 0; i < 7; i++) {
+    const btn = document.getElementById('sb-' + i);
+    if (!btn) continue;
+    const path = btn.querySelector('path');
+    const lbl = btn.getElementById('sl-' + i);
+    if (G.cps[i]) {
+      // 已打卡 - 金色星星 + 动画
+      if (path) path.setAttribute('fill', '#FFD700');
+      btn.querySelector('.star-svg')?.classList.remove('off');
+      btn.querySelector('.star-svg')?.classList.add('on');
+      if (lbl) { lbl.setAttribute('class', 'star-label done'); lbl.textContent = spots[i] + ' ✓'; }
+    } else {
+      // 未打卡 - 灰色星星
+      if (path) path.setAttribute('fill', '#CCC');
+      btn.querySelector('.star-svg')?.classList.remove('on');
+      btn.querySelector('.star-svg')?.classList.add('off');
+      if (lbl) { lbl.setAttribute('class', 'star-label'); lbl.textContent = spots[i]; }
+    }
+  }
+  const done = G.cps.filter(Boolean).length;
+  const countEl = document.getElementById('cp-count');
+  if (countEl) countEl.textContent = `${done} / 7`;
+}
+
+function updateStepUI() {
+  const s = G.steps;
+  document.getElementById('step-num').textContent = s;
+  document.getElementById('prog-fill').style.width = `${Math.min(100,(s/STEP_TARGET)*100)}%`;
+}
+
+function onToggleRun() {
+  if (!G.started) {
+    // 第一次开始
+    G.started = true;
+    G.startTs = Date.now();
+    G.paused = false;
+    G.pauseAcc = 0;
+    document.getElementById('ctrl-main').textContent = '⏸ 暂停';
+    document.getElementById('ctrl-main').className = 'ctrl-btn ctrl-stop';
+    setCheer(0);
+    startClock();
+    requestMotion();
+    save();
+  } else if (G.paused) {
+    // 继续
+    G.paused = false;
+    const pauseDur = G.pausedAt ? (Date.now() - G.pausedAt) : 0;
+    G.pauseAcc = (G.pauseAcc || 0) + pauseDur;
+    G.pausedAt = null;
+    document.getElementById('ctrl-main').textContent = '⏸ 暂停';
+    document.getElementById('ctrl-main').className = 'ctrl-btn ctrl-stop';
+    startClock();
+    requestMotion();
+    save();
+  } else {
+    // 暂停
+    G.paused = true;
+    G.pausedAt = Date.now();
+    document.getElementById('ctrl-main').textContent = '▶️ 继续跑步';
+    document.getElementById('ctrl-main').className = 'ctrl-btn ctrl-start';
+    clearInterval(_timer); _timer = null;
+    stopMotion();
+    save();
+  }
+}
+
+function startClock() {
+  clearInterval(_timer);
+  _timer = setInterval(() => {
+    const elapsed = Math.floor((Date.now() - G.startTs - (G.pauseAcc||0)) / 1000);
+    const rem = Math.max(0, TIME_TOTAL - elapsed);
+    const m = Math.floor(rem / 60), s = rem % 60;
+    document.getElementById('timer').textContent = `${pad(m)}:${pad(s)}`;
+    const el = document.getElementById('timer');
+    if (rem <= 60) el.className = 'timer-display danger';
+    else if (rem <= 300) el.className = 'timer-display warn';
+    if (rem === 0) { clearInterval(_timer); onTimeEnd(); }
+  }, 500);
+}
+
+function requestMotion() {
+  if (_stepH) return;
+  if (typeof DeviceMotionEvent !== 'undefined') {
+    if (typeof DeviceMotionEvent.requestPermission === 'function') {
+      DeviceMotionEvent.requestPermission().then(r => {
+        if (r === 'granted') listenMotion();
+      }).catch(() => {});
+    } else {
+      listenMotion();
+    }
+  }
+}
+
+function listenMotion() {
+  function handler(e) {
+    if (!G.started || G.paused) return;
+    const a = e.accelerationIncludingGravity;
+    if (!a) return;
+    const mag = Math.sqrt((a.x||0)**2 + (a.y||0)**2 + (a.z||0)**2);
+    
+    // 低通滤波平滑数据
+    _filteredAcc = _filteredAcc * 0.7 + mag * 0.3;
+    
+    // 峰值检测算法：检测加速度变化（去掉重力影响）
+    const delta = Math.abs(_filteredAcc - _lastMag);
+    const now = Date.now();
+    
+    // 步数检测条件：
+    // 1. 加速度变化超过阈值（需要较大晃动）
+    // 2. 距离上次步数至少300ms（防止误判）
+    // 3. 过滤掉微小扰动（阈值设为18）
+    if (delta > 18 && (now - _lastStepTime) > 300) {
+      G.steps++;
+      _lastStepTime = now;
+      updateStepUI();
+      checkCheer();
+      // 手动打卡模式：不再自动触发打卡
+      save();
+    }
+    
+    // 平滑更新基准值
+    if (delta < 2) {
+      _lastMag = _lastMag * 0.9 + _filteredAcc * 0.1;
+    }
+  }
+  window.addEventListener('devicemotion', handler);
+  _stepH = handler;
+}
+
+function stopMotion() {
+  if (_stepH) {
+    window.removeEventListener('devicemotion', _stepH);
+    _stepH = null;
+  }
+}
+
+function checkCheer() {
+  const milestones = [0,500,1000,1500,2000,2500,3000];
+  for (let i = milestones.length-1; i >= 0; i--) {
+    if (G.steps >= milestones[i] && G.lastCheer < i) {
+      G.lastCheer = i;
+      setCheer(i);
+      break;
+    }
+  }
+}
+
+function setCheer(idx) {
+  const el = document.getElementById('cheer-txt');
+  el.textContent = CHEERS[idx] || CHEERS[0];
+  el.style.animation = 'none';
+  el.offsetHeight;
+  el.style.animation = 'cheerPop 0.4s ease';
+}
+
+function onStarClick(i) {
+  // 手动点击景点打卡
+  const spots = ['起点','1号点','2号点','3号点','4号点','5号点','终点'];
+  if (G.cps[i]) {
+    showToast('✅ 已完成' + spots[i] + '打卡');
+    return;
+  }
+  openCpModal(i);
+}
+
+function openCpModal(i) {
+  G.curCp = i;
+  const spots = ['起点','1号点','2号点','3号点','4号点','5号点','终点'];
+  document.getElementById('cp-title').textContent = `⭐ ${spots[i]}打卡`;
+  document.getElementById('cp-hint').textContent = `点击下方按钮确认打卡（无需拍照）`;
+  document.getElementById('cp-preview').innerHTML = '<span style="font-size:40px;color:#FFD700;">⭐</span>';
+  document.getElementById('cp-confirm').disabled = false; // 无需拍照，直接可以打卡
+  openOverlay('ov-checkpoint');
+}
+
+function onCpPhoto(input) {
+  const f = input.files[0];
+  if (!f) return;
+  const r = new FileReader();
+  r.onload = e => {
+    document.getElementById('cp-preview').innerHTML = `<img src="${e.target.result}">`;
+    document.getElementById('cp-confirm').disabled = false;
+    G.photos[G.curCp] = e.target.result;
+  };
+  r.readAsDataURL(f);
+}
+
+function confirmCp() {
+  const spots = ['起点','1号点','2号点','3号点','4号点','5号点','终点'];
+  G.cps[G.curCp] = true;
+  renderStars();
+  
+  // 添加打卡成功的视觉反馈
+  const btn = document.getElementById('sb-' + G.curCp);
+  if (btn) {
+    btn.style.transform = 'scale(1.3)';
+    btn.style.transition = 'transform 0.3s ease';
+    setTimeout(() => { btn.style.transform = 'scale(1)'; }, 300);
+  }
+  
+  closeOverlay('ov-checkpoint');
+  showToast(`🎉 ${spots[G.curCp]}打卡成功！`, 3000);
+  save();
+  checkWin();
+}
+
+function checkWin() {
+  const done = G.cps.filter(Boolean).length;
+  // 7个景点全部打卡即可获奖（步数不再作为限制）
+  if (done >= 7) {
+    // 获胜！
+    clearInterval(_timer);
+    stopMotion();
+    showTrophy();
+  }
+}
+
+function showTrophy() {
+  // 奖杯弹窗显示孩子名字
+  document.getElementById('tr-name').textContent = '🎉 ' + G.name + ' 🎉';
+  document.getElementById('tr-meta').textContent = G.grade + ' · ' + G.classroom;
+  const done = G.cps.filter(Boolean).length;
+  document.getElementById('tr-cert').innerHTML = `
+    🏃 完成步数：<strong>${G.steps} 步</strong><br>
+    ⭐ 打卡完成：<strong>${done} / 7 站</strong><br>
+    📅 荣获：第一届小小马拉松完赛勋章<br>
+    🎖 北京幼师实验幼儿园定州园 颁发
+  `;
+  openOverlay('ov-trophy');
+  launchConfetti();
+}
+
+function onTimeEnd() {
+  G.paused = true;
+  stopMotion();
+  const done = G.cps.filter(Boolean).length;
+  // 7个景点全部打卡即可获奖
+  if (done >= 7) {
+    showTrophy();
+  } else {
+    goComplete();
+  }
+}
+
+function goComplete() {
+  const elapsed = G.startTs ? Math.floor((Date.now() - G.startTs - (G.pauseAcc||0)) / 1000) : 0;
+  const m = Math.floor(elapsed/60), s = elapsed%60;
+  const done = G.cps.filter(Boolean).length;
+  document.getElementById('done-name').textContent = G.name;
+  document.getElementById('done-grade').textContent = G.grade + ' · ' + G.classroom;
+  document.getElementById('done-steps').textContent = G.steps + ' 步';
+  document.getElementById('done-time').textContent = `${pad(m)}:${pad(s)}`;
+  document.getElementById('done-class').textContent = G.grade + ' · ' + G.classroom;
+  
+  let stars = '';
+  for (let i = 0; i < 7; i++) stars += `<span>${G.cps[i] ? '⭐' : '☆'}</span>`;
+  document.getElementById('done-stars').innerHTML = stars;
+  
+  showPage('page-done');
+  localStorage.removeItem(KEY);
+  // 7个打卡点完成即显示彩带
+  if (done >= 7) launchConfetti();
+}
+
+function onExit() {
+  if (!G.started || confirm('确定退出？进度将会保存，下次可继续。')) {
+    if (G.started) save();
+    else localStorage.removeItem(KEY);
+    showPage('page-reg');
+  }
+}
+
+function doShare() {
+  const done = G.cps.filter(Boolean).length;
+  const text = `🏃 ${G.name}小朋友完成了第一届小小马拉松！\n🏆 步数：${G.steps}步\n⭐ 打卡：${done}/7站\n🎉 快来一起挑战吧！`;
+  if (navigator.share) {
+    navigator.share({ title:'小小马拉松', text, url:location.href }).catch(()=>{});
+  } else {
+    navigator.clipboard && navigator.clipboard.writeText(text + '\n' + location.href)
+      .then(() => showToast('已复制！粘贴到微信即可分享'))
+      .catch(() => showToast('请截图分享给好友'));
+  }
+}
+
+function doRestart() {
+  localStorage.removeItem(KEY);
+  location.reload();
+}
+
+// ===================== 工具 =====================
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+function openOverlay(id) { document.getElementById(id).classList.add('show'); }
+function closeOverlay(id) { document.getElementById(id).classList.remove('show'); }
+function pad(n) { return String(n).padStart(2,'0'); }
+function save() { localStorage.setItem(KEY, JSON.stringify(G)); }
+
+function showToast(msg, dur=2000) {
+  const el = document.createElement('div');
+  el.className = 'toast-msg';
+  el.textContent = msg;
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(), dur);
+}
+
+function launchConfetti() {
+  const colors = ['#FFD700','#FF6B6B','#4ECDC4','#9B59B6','#2ECC71','#E74C3C','#3498DB'];
+  const wrap = document.getElementById('confetti-wrap');
+  wrap.innerHTML = '';
+  for (let i = 0; i < 60; i++) {
+    const div = document.createElement('div');
+    div.className = 'confetti-piece';
+    div.style.cssText = `
+      left:${Math.random()*100}vw;
+      background:${colors[~~(Math.random()*colors.length)]};
+      border-radius:${Math.random()>0.5?'50%':'2px'};
+      animation:confettiFall ${1.5+Math.random()*2}s ${Math.random()*0.5}s ease-in forwards;
+    `;
+    wrap.appendChild(div);
+  }
+  setTimeout(() => wrap.innerHTML = '', 4000);
+}
+
+// ===================== 后台运行保护 =====================
+// 使用 Page Visibility API + localStorage + 通知确保后台运行
+let _bgInterval = null;
+
+function updateStatusBar() {
+  const bar = document.getElementById('status-bar');
+  if (!bar) return;
+  if (G.started && !G.paused) {
+    const elapsed = G.startTs ? Math.floor((Date.now() - G.startTs - (G.pauseAcc||0)) / 1000) : 0;
+    const rem = Math.max(0, TIME_TOTAL - elapsed);
+    const m = Math.floor(rem / 60), s = rem % 60;
+    bar.innerHTML = `<span>🏃 跑步中 ${pad(m)}:${pad(s)}</span><span>⭐ ${G.cps.filter(Boolean).length}/7</span>`;
+    bar.classList.add('show');
+  } else {
+    bar.classList.remove('show');
+  }
+}
+
+document.addEventListener('visibilitychange', () => {
+  if (!G.started) return;
+  
+  if (document.hidden) {
+    // 页面隐藏到后台
+    save();
+    updateStatusBar(); // 显示状态条
+    // 尝试发送通知
+    if ('Notification' in window && Notification.permission === 'granted') {
+      const elapsed = G.startTs ? Math.floor((Date.now() - G.startTs - (G.pauseAcc||0)) / 1000) : 0;
+      const rem = Math.max(0, TIME_TOTAL - elapsed);
+      const m = Math.floor(rem / 60), s = rem % 60;
+      new Notification('🏃 小马拉松进行中', {
+        body: `剩余时间 ${pad(m)}:${pad(s)} · 已打卡 ${G.cps.filter(Boolean).length}/7`,
+        tag: 'marathon-status',
+        requireInteraction: true
+      });
+    }
+    // 如果正在计时，确保继续运行
+    if (!G.paused && !_bgInterval) {
+      _bgInterval = setInterval(() => {
+        if (!document.hidden && G.started && !G.paused) {
+          const elapsed = Math.floor((Date.now() - G.startTs - (G.pauseAcc||0)) / 1000);
+          if (elapsed >= TIME_TOTAL) {
+            clearInterval(_bgInterval);
+            _bgInterval = null;
+            onTimeEnd();
+          }
+        }
+        updateStatusBar();
+      }, 1000);
+    }
+  } else {
+    // 页面回到前台
+    if (_bgInterval) {
+      clearInterval(_bgInterval);
+      _bgInterval = null;
+    }
+    updateStatusBar(); // 更新或隐藏状态条
+    loadState();
+  }
+});
+
+// 请求通知权限
+if ('Notification' in window && Notification.permission === 'default') {
+  Notification.requestPermission();
+}
+
+function loadState() {
+  const saved = localStorage.getItem(KEY);
+  if (saved) {
+    try {
+      const d = JSON.parse(saved);
+      G = d;
+      // 更新UI
+      if (document.getElementById('timer')) {
+        const elapsed = Math.floor((Date.now() - G.startTs - (G.pauseAcc||0)) / 1000);
+        const rem = Math.max(0, TIME_TOTAL - elapsed);
+        const m = Math.floor(rem / 60), s = rem % 60;
+        document.getElementById('timer').textContent = `${pad(m)}:${pad(s)}`;
+        updateStepUI();
+        renderStars();
+      }
+    } catch(e){}
+  }
+}
+
+// ===================== 管理员功能 =====================
+const ADMIN_KEY = 'marathon_admin_v3';
+const RANKING_KEY = 'marathon_ranking_v3';
+const ADMIN_PASSWORD = 'dxml2026'; // 管理员密码
+
+function adminLogin() {
+  const pwd = document.getElementById('admin-pwd').value;
+  if (pwd === ADMIN_PASSWORD) {
+    sessionStorage.setItem(ADMIN_KEY, '1');
+    loadAdminDashboard();
+    showPage('page-admin-dash');
+  } else {
+    showToast('密码错误');
+  }
+}
+
+function adminLogout() {
+  sessionStorage.removeItem(ADMIN_KEY);
+  showPage('page-admin');
+}
+
+function loadAdminDashboard() {
+  const ranking = JSON.parse(localStorage.getItem(RANKING_KEY) || '[]');
+
+  // 统计
+  document.getElementById('stat-total').textContent = ranking.length;
+  const finished = ranking.filter(r => r.cps && r.cps.filter(Boolean).length >= 7).length;
+  document.getElementById('stat-finished').textContent = finished;
+
+  // 渲染排名列表
+  const list = document.getElementById('rank-list');
+
+  if (ranking.length === 0) {
+    list.innerHTML = '<div style="padding:40px;text-align:center;color:#aaa;">暂无数据<br><br>完成活动的参与者数据会自动显示在这里</div>';
+    return;
+  }
+
+  // 按打卡数量和步数排序
+  ranking.sort((a, b) => {
+    const aDone = (a.cps || []).filter(Boolean).length;
+    const bDone = (b.cps || []).filter(Boolean).length;
+    if (bDone !== aDone) return bDone - aDone;
+    return (b.steps || 0) - (a.steps || 0);
+  });
+
+  let html = '';
+  ranking.forEach((r, idx) => {
+    const done = (r.cps || []).filter(Boolean).length;
+    const rank = idx + 1;
+    const rankClass = rank === 1 ? 'top1' : rank === 2 ? 'top2' : rank === 3 ? 'top3' : '';
+    const starsHtml = Array(7).fill(0).map((_, i) =>
+      `<span class="${i < done ? 'done' : 'todo'}">${i < done ? '⭐' : '☆'}</span>`
+    ).join('');
+
+    html += `
+      <div class="rank-item">
+        <div class="rank-num ${rankClass}">${rank}</div>
+        <img class="rank-avatar" src="${r.avatar || 'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22/>'}" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2240%22 fill=%22%23ddd%22/></svg>'">
+        <div class="rank-info">
+          <div class="rank-name">${r.name || '未知'}</div>
+          <div class="rank-meta">${r.grade || ''} · ${r.classroom || ''} · ${r.steps || 0}步</div>
+        </div>
+        <div class="rank-stars">${starsHtml}</div>
+      </div>
+    `;
+  });
+  list.innerHTML = html;
+}
+
+function exportRanking() {
+  const ranking = JSON.parse(localStorage.getItem(RANKING_KEY) || '[]');
+
+  if (ranking.length === 0) {
+    showToast('暂无数据可导出');
+    return;
+  }
+
+  // 按打卡数量和步数排序
+  ranking.sort((a, b) => {
+    const aDone = (a.cps || []).filter(Boolean).length;
+    const bDone = (b.cps || []).filter(Boolean).length;
+    if (bDone !== aDone) return bDone - aDone;
+    return (b.steps || 0) - (a.steps || 0);
+  });
+
+  // 生成CSV
+  const headers = ['排名', '姓名', '年级', '班级', '步数', '打卡数量', '打卡详情'];
+  const rows = ranking.map((r, idx) => [
+    idx + 1,
+    r.name || '',
+    r.grade || '',
+    r.classroom || '',
+    r.steps || 0,
+    (r.cps || []).filter(Boolean).length,
+    (r.cps || []).map((c, i) => c ? ['起点','1号点','2号点','3号点','4号点','5号点','终点'][i] : null).filter(Boolean).join(', ') || '无'
+  ]);
+
+  let csv = headers.join(',') + '\n';
+  rows.forEach(row => {
+    csv += row.map(cell => `"${cell}"`).join(',') + '\n';
+  });
+
+  // 下载CSV
+  const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `小小马拉松排名_${new Date().toLocaleDateString('zh-CN').replace(/\//g, '-')}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+
+  showToast('导出成功！');
+}
+
+// 保存完成数据到排行榜
+function saveToRanking() {
+  const ranking = JSON.parse(localStorage.getItem(RANKING_KEY) || '[]');
+
+  // 检查是否已经存在
+  const existingIdx = ranking.findIndex(r => r.name === G.name && r.grade === G.grade && r.classroom === G.classroom);
+
+  const record = {
+    name: G.name,
+    grade: G.grade,
+    classroom: G.classroom,
+    avatar: G.avatar,
+    steps: G.steps,
+    cps: G.cps,
+    finishedAt: Date.now()
+  };
+
+  if (existingIdx >= 0) {
+    // 更新已有记录（保留更好的成绩）
+    const existing = ranking[existingIdx];
+    const existingDone = (existing.cps || []).filter(Boolean).length;
+    const newDone = (record.cps || []).filter(Boolean).length;
+    if (newDone > existingDone || (newDone === existingDone && record.steps > existing.steps)) {
+      ranking[existingIdx] = record;
+    }
+  } else {
+    ranking.push(record);
+  }
+
+  localStorage.setItem(RANKING_KEY, JSON.stringify(ranking));
+}
+
+// ===================== 奖杯图片分享 =====================
+function generateTrophyImage() {
+  const canvas = document.getElementById('trophy-canvas');
+  const ctx = canvas.getContext('2d');
+  const W = 1080, H = 1920;
+
+  // 清空画布
+  ctx.clearRect(0, 0, W, H);
+
+  // 渐变背景
+  const grad = ctx.createLinearGradient(0, 0, 0, H);
+  grad.addColorStop(0, '#f7971e');
+  grad.addColorStop(1, '#ffd200');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, W, H);
+
+  // 装饰圆
+  ctx.fillStyle = 'rgba(255,255,255,0.1)';
+  ctx.beginPath();
+  ctx.arc(W/2, 400, 300, 0, Math.PI * 2);
+  ctx.fill();
+
+  // 奖杯 emoji
+  ctx.font = '280px serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('🏆', W/2, 550);
+
+  // 标题
+  ctx.fillStyle = 'white';
+  ctx.font = 'bold 72px -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif';
+  ctx.fillText('太棒了！完成啦！', W/2, 720);
+
+  // 名字徽章
+  ctx.fillStyle = 'rgba(255,255,255,0.95)';
+  roundRect(ctx, W/2 - 200, 780, 400, 200, 50);
+  ctx.fill();
+
+  ctx.fillStyle = '#f7971e';
+  ctx.font = 'bold 80px -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif';
+  ctx.fillText(G.name, W/2, 880);
+
+  ctx.fillStyle = '#888';
+  ctx.font = '36px -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif';
+  ctx.fillText(G.grade + ' · ' + G.classroom, W/2, 940);
+
+  // 统计数据
+  const done = G.cps.filter(Boolean).length;
+  const elapsed = G.startTs ? Math.floor((Date.now() - G.startTs - (G.pauseAcc||0)) / 1000) : 0;
+  const m = Math.floor(elapsed/60), s = elapsed%60;
+
+  // 统计卡片
+  ctx.fillStyle = 'rgba(255,255,255,0.95)';
+  roundRect(ctx, 80, 1040, W - 160, 280, 30);
+  ctx.fill();
+
+  // 步数
+  ctx.fillStyle = '#00b09b';
+  ctx.font = 'bold 100px -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif';
+  ctx.fillText(G.steps + ' 步', W/2, 1150);
+  ctx.fillStyle = '#888';
+  ctx.font = '36px -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif';
+  ctx.fillText('完成步数', W/2, 1200);
+
+  // 打卡
+  ctx.fillStyle = '#f7971e';
+  ctx.font = 'bold 80px -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif';
+  ctx.fillText(done + ' / 7 站', W/2, 1270);
+  ctx.fillStyle = '#888';
+  ctx.font = '36px -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif';
+  ctx.fillText('打卡完成', W/2, 1310);
+
+  // 星星
+  ctx.font = '64px serif';
+  for (let i = 0; i < 7; i++) {
+    ctx.fillText(G.cps[i] ? '⭐' : '☆', W/2 - 192 + i * 64, 1150);
+  }
+
+  // 机构名称
+  ctx.fillStyle = 'rgba(255,255,255,0.8)';
+  ctx.font = '40px -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif';
+  ctx.fillText('北京幼师实验幼儿园定州园', W/2, 1500);
+
+  ctx.fillStyle = 'rgba(255,255,255,0.6)';
+  ctx.font = '32px -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif';
+  ctx.fillText('第一届小小马拉松', W/2, 1550);
+
+  // 二维码区域提示
+  ctx.fillStyle = 'rgba(255,255,255,0.9)';
+  roundRect(ctx, W/2 - 150, 1650, 300, 150, 20);
+  ctx.fill();
+  ctx.fillStyle = '#888';
+  ctx.font = '28px -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif';
+  ctx.fillText('扫码参与活动', W/2, 1720);
+  ctx.fillText('https://wanglin000000.github.io/little-marathon-v3/', W/2, 1760);
+
+  return canvas.toDataURL('image/png');
+}
+
+function roundRect(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.lineTo(x + w - r, y);
+  ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+  ctx.lineTo(x + w, y + h - r);
+  ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+  ctx.lineTo(x + r, y + h);
+  ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+  ctx.lineTo(x, y + r);
+  ctx.quadraticCurveTo(x, y, x + r, y);
+  ctx.closePath();
+}
+
+function showSharePreview() {
+  const imgData = generateTrophyImage();
+  document.getElementById('share-preview-img').src = imgData;
+  openOverlay('ov-share-preview');
+}
+
+function saveShareImage() {
+  const imgData = generateTrophyImage();
+  const a = document.createElement('a');
+  a.href = imgData;
+  a.download = `小小马拉松_${G.name}_完赛证书.png`;
+  a.click();
+  showToast('图片已保存！');
+}
+
+function shareImageDirect() {
+  const imgData = generateTrophyImage();
+
+  // 微信等环境不支持 navigator.share，直接保存图片
+  if (!navigator.share || !navigator.canShare) {
+    closeOverlay('ov-share-preview');
+    saveShareImage();
+    showToast('已保存图片，请到相册分享', 3000);
+    return;
+  }
+
+  // 转换为 blob 尝试分享
+  fetch(imgData).then(r => r.blob()).then(blob => {
+    const file = new File([blob], 'trophy.png', { type: 'image/png' });
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      navigator.share({
+        title: G.name + ' 完成小小马拉松！',
+        text: `🏆 ${G.name}小朋友完成了第一届小小马拉松，打卡${G.cps.filter(Boolean).length}/7站！`,
+        files: [file]
+      }).then(() => {
+        closeOverlay('ov-share-preview');
+      }).catch(() => {
+        // 分享取消或失败，保存图片
+        closeOverlay('ov-share-preview');
+        saveShareImage();
+        showToast('已保存图片，可手动分享', 3000);
+      });
+    } else {
+      // 不支持文件分享，保存图片
+      closeOverlay('ov-share-preview');
+      saveShareImage();
+      showToast('已保存图片，请到相册分享', 3000);
+    }
+  }).catch(() => {
+    closeOverlay('ov-share-preview');
+    saveShareImage();
+    showToast('已保存图片，请到相册分享', 3000);
+  });
+}
+
+// 修改分享功能
+function doShare() {
+  // 先检查是否7站全部完成，如果完成则显示图片分享
+  const done = G.cps.filter(Boolean).length;
+  if (done >= 7) {
+    showSharePreview();
+    return;
+  }
+
+  // 未完成7站，用文字分享
+  const text = `🏃 ${G.name}小朋友正在参加第一届小小马拉松！\n⭐ 打卡进度：${done}/7站\n👣 当前步数：${G.steps}步\n🎉 快来一起挑战吧！`;
+  
+  if (navigator.share) {
+    navigator.share({ title:'小小马拉松', text, url:location.href }).then(() => {
+      showToast('分享成功！');
+    }).catch(() => {
+      // 用户取消分享，不做处理
+    });
+  } else {
+    // 不支持分享，复制链接
+    navigator.clipboard && navigator.clipboard.writeText(text + '\n' + location.href)
+      .then(() => showToast('已复制！粘贴到微信即可分享'))
+      .catch(() => showToast('请截图分享给好友'));
+  }
+}
+
+// 在完成时保存到排行榜
+const _originalGoComplete = goComplete;
+goComplete = function() {
+  saveToRanking();
+  _originalGoComplete();
+};
+
+const _originalShowTrophy = showTrophy;
+showTrophy = function() {
+  saveToRanking();
+  _originalShowTrophy();
+};
+
+// ===================== PWA 安装 =====================
+let deferredPrompt = null;
+
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  deferredPrompt = e;
+  // 显示安装提示条
+  const banner = document.getElementById('install-banner');
+  if (banner) banner.classList.add('show');
+});
+
+function installApp() {
+  if (!deferredPrompt) return;
+  deferredPrompt.prompt();
+  deferredPrompt.userChoice.then(result => {
+    if (result.outcome === 'accepted') {
+      showToast('安装成功！');
+    }
+    deferredPrompt = null;
+    document.getElementById('install-banner').classList.remove('show');
+  });
+}
+
+// 注册 Service Worker
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js')
+      .then(reg => console.log('SW registered:', reg.scope))
+      .catch(err => console.log('SW registration failed:', err));
+  });
+}
+</script>
+
+</body>
+</html>
