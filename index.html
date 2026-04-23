@@ -988,30 +988,26 @@ function confirmCp() {
   var spots = ['起点','1号点','2号点','3号点','4号点','5号点','终点'];
   var idx = G.curCp;
   
-  // 第一步：立即关闭弹窗（用 style.display 而不是 class）
-  var overlay = document.getElementById('ov-checkpoint');
-  overlay.style.display = 'none';
+  // 关闭弹窗
+  document.getElementById('ov-checkpoint').style.display = 'none';
   
-  // 第二步：更新数据
+  // 更新数据
   G.cps[idx] = true;
   
-  // 第三步：更新星星显示
+  // 更新星星
   var starBtn = document.getElementById('sb-' + idx);
   if (starBtn) {
     var svg = starBtn.querySelector('svg path');
     if (svg) svg.setAttribute('fill', '#FFD700');
-    starBtn.style.transform = 'scale(1.2)';
-    starBtn.style.transition = 'transform 0.3s ease';
-    setTimeout(function(){ starBtn.style.transform = 'scale(1)'; }, 300);
   }
   
-  // 第四步：保存
+  // 保存
   localStorage.setItem(KEY, JSON.stringify(G));
   
-  // 第五步：显示成功提示
+  // 提示
   showToast('🎉 ' + spots[idx] + '打卡成功！', 3000);
   
-  // 第六步：检查是否完成
+  // 检查是否完成
   if (G.cps.filter(Boolean).length >= 7) {
     showTrophy();
   }
@@ -1108,12 +1104,10 @@ function showPage(id) {
 function openOverlay(id) { 
   var el = document.getElementById(id);
   el.style.display = 'flex';
-  el.classList.add('show'); 
 }
 function closeOverlay(id) { 
   var el = document.getElementById(id);
   el.style.display = 'none';
-  el.classList.remove('show'); 
 }
 function pad(n) { return String(n).padStart(2,'0'); }
 function save() { localStorage.setItem(KEY, JSON.stringify(G)); }
