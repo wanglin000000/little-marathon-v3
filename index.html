@@ -558,12 +558,12 @@
 
 <!-- ===== 打卡弹窗 ===== -->
 <div class="overlay" id="ov-checkpoint" onclick="if(event.target==this)closeOverlay('ov-checkpoint')">
-  <div class="popup" style="padding:30px 24px;max-width:320px;">
+  <div class="popup" style="padding:30px 24px;max-width:320px;z-index:1001;position:relative;">
     <div style="font-size:48px;margin-bottom:16px;">🎯</div>
     <h3 id="cp-title" style="font-size:24px;margin-bottom:8px;">打卡确认</h3>
     <p id="cp-hint" style="color:#666;margin-bottom:24px;">确定要在此地点打卡吗？</p>
-    <a id="cp-confirm" href="javascript:void(0)" onclick="confirmCp();return false;" style="display:block;background:#00b09b;color:white;text-align:center;padding:18px;border-radius:12px;font-size:18px;font-weight:bold;text-decoration:none;margin-bottom:12px;">✅ 确认打卡</a>
-    <a href="javascript:void(0)" onclick="closeOverlay('ov-checkpoint');return false;" style="display:block;background:#eee;color:#666;text-align:center;padding:14px;border-radius:12px;font-size:16px;text-decoration:none;">取消</a>
+    <div id="cp-confirm" style="display:block;background:#00b09b;color:white;text-align:center;padding:18px;border-radius:12px;font-size:18px;font-weight:bold;margin-bottom:12px;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;">✅ 确认打卡</div>
+    <div onclick="closeOverlay('ov-checkpoint')" style="display:block;background:#eee;color:#666;text-align:center;padding:14px;border-radius:12px;font-size:16px;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;">取消</div>
   </div>
 </div>
 
@@ -1605,6 +1605,11 @@ if ('serviceWorker' in navigator) {
       .catch(err => console.log('SW registration failed:', err));
   });
 }
+
+// 初始化按钮点击事件
+document.getElementById('cp-confirm').addEventListener('click', function() {
+  confirmCp();
+});
 </script>
 
 </body>
