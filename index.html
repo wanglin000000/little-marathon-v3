@@ -559,25 +559,12 @@
 <!-- ===== 打卡弹窗 ===== -->
 <div class="overlay" id="ov-checkpoint">
   <div class="popup">
-    <h3 id="cp-title">📸 第1站打卡</h3>
-    <div class="sub-txt" id="cp-hint">完成第1站，拍照留念！</div>
-    <div class="photo-preview" id="cp-preview" onclick="document.getElementById('cp-file').click()">
-      <span style="font-size:40px;color:#DDD;">📷</span>
-    </div>
-    <div class="photo-btn-wrap">
-      <label class="photo-action" for="cp-camera" id="btn-cam">
-        <span style="font-size:22px;">📸</span>
-        <span>拍照</span>
-        <input type="file" id="cp-camera" accept="image/*" capture="environment" style="display:none" onchange="onCpPhoto(this)">
-      </label>
-      <label class="photo-action" for="cp-gallery" id="btn-gal">
-        <span style="font-size:22px;">🖼️</span>
-        <span>相册</span>
-        <input type="file" id="cp-gallery" accept="image/*" style="display:none" onchange="onCpPhoto(this)">
-      </label>
-    </div>
-    <button class="btn btn-green" id="cp-confirm" onclick="confirmCp()">⭐ 确认打卡</button>
-    <button class="btn btn-gray" style="margin-top:8px;" onclick="closeOverlay('ov-checkpoint')">返回</button>
+    <h3 id="cp-title">⭐ 第1站打卡</h3>
+    <div class="sub-txt" id="cp-hint" style="margin-bottom:20px;">点击下方按钮即可完成打卡</div>
+    <button class="btn btn-green" id="cp-confirm" onclick="confirmCp()" style="font-size:20px;padding:20px;">
+      ✨ 确认打卡 ✨
+    </button>
+    <button class="btn btn-gray" style="margin-top:12px;" onclick="closeOverlay('ov-checkpoint')">返回</button>
   </div>
 </div>
 
