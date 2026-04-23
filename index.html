@@ -288,9 +288,9 @@
     .star-result span { font-size:20px; }
     
     /* ======== 弹窗 ======== */
-    .overlay { position:fixed; inset:0; background:rgba(0,0,0,0.65); display:none; align-items:center; justify-content:center; z-index:1000; padding:16px; }
+    .overlay { position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.65); display:none; align-items:center; justify-content:center; z-index:1000; padding:16px; padding-top:max(16px, env(safe-area-inset-top)); padding-bottom:max(16px, env(safe-area-inset-bottom)); overflow-y:auto; -webkit-overflow-scrolling:touch; }
     .overlay.show { display:flex; }
-    .popup { background:white; border-radius:24px; padding:28px 18px 18px; width:100%; max-width:360px; text-align:center; }
+    .popup { background:white; border-radius:24px; padding:28px 18px 18px; width:100%; max-width:360px; text-align:center; max-height:90vh; overflow-y:auto; }
     .popup h3 { font-size:20px; font-weight:800; margin-bottom:4px; }
     .popup .sub-txt { font-size:13px; color:var(--muted); margin-bottom:14px; }
     .photo-preview {
@@ -558,13 +558,13 @@
 
 <!-- ===== 打卡弹窗 ===== -->
 <div class="overlay" id="ov-checkpoint">
-  <div class="popup">
-    <h3 id="cp-title">⭐ 第1站打卡</h3>
-    <div class="sub-txt" id="cp-hint" style="margin-bottom:20px;">点击下方按钮即可完成打卡</div>
-    <button class="btn btn-green" id="cp-confirm" onclick="confirmCp()" style="font-size:20px;padding:20px;">
+  <div class="popup" style="padding:24px 20px 20px;">
+    <h3 id="cp-title" style="font-size:22px;">⭐ 第1站打卡</h3>
+    <div class="sub-txt" id="cp-hint" style="margin:12px 0 20px;font-size:15px;">点击下方按钮完成打卡</div>
+    <button class="btn btn-green" id="cp-confirm" onclick="confirmCp()" style="font-size:18px;padding:16px 24px;min-height:56px;touch-action:manipulation;-webkit-tap-highlight-color:rgba(0,0,0,0);">
       ✨ 确认打卡 ✨
     </button>
-    <button class="btn btn-gray" style="margin-top:12px;" onclick="closeOverlay('ov-checkpoint')">返回</button>
+    <button class="btn btn-gray" style="margin-top:10px;font-size:16px;padding:12px 24px;min-height:48px;touch-action:manipulation;-webkit-tap-highlight-color:rgba(0,0,0,0);" onclick="closeOverlay('ov-checkpoint')">返回</button>
   </div>
 </div>
 
