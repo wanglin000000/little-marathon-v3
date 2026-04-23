@@ -562,8 +562,8 @@
     <div style="font-size:48px;margin-bottom:16px;">🎯</div>
     <h3 id="cp-title" style="font-size:24px;margin-bottom:8px;">打卡确认</h3>
     <p id="cp-hint" style="color:#666;margin-bottom:24px;">确定要在此地点打卡吗？</p>
-    <div id="cp-confirm-btn" style="display:block;background:#00b09b;color:white;text-align:center;padding:18px;border-radius:12px;font-size:18px;font-weight:bold;margin-bottom:12px;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;">✅ 确认打卡</div>
-    <div id="cp-cancel-btn" onclick="closeOverlay('ov-checkpoint')" style="display:block;background:#eee;color:#666;text-align:center;padding:14px;border-radius:12px;font-size:16px;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;">取消</div>
+    <div id="cp-confirm-btn" onclick="confirmCp()" style="background:#00b09b;color:white;text-align:center;padding:18px;border-radius:12px;font-size:18px;font-weight:bold;margin-bottom:12px;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;-webkit-appearance:none;user-select:none;">✅ 确认打卡</div>
+    <div onclick="closeOverlay('ov-checkpoint')" style="background:#eee;color:#666;text-align:center;padding:14px;border-radius:12px;font-size:16px;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;-webkit-appearance:none;user-select:none;">取消</div>
   </div>
 </div>
 
@@ -978,7 +978,6 @@ function onCpPhoto(input) {
   const r = new FileReader();
   r.onload = e => {
     document.getElementById('cp-preview').innerHTML = `<img src="${e.target.result}">`;
-    document.getElementById('cp-confirm').disabled = false;
     G.photos[G.curCp] = e.target.result;
   };
   r.readAsDataURL(f);
@@ -1607,14 +1606,6 @@ if ('serviceWorker' in navigator) {
       .catch(err => console.log('SW registration failed:', err));
   });
 }
-
-// 初始化按钮点击事件
-document.getElementById('cp-confirm-btn').addEventListener('click', function() {
-  confirmCp();
-});
-document.getElementById('cp-cancel-btn').addEventListener('click', function() {
-  closeOverlay('ov-checkpoint');
-});
 </script>
 
 </body>
